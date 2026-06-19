@@ -2,16 +2,16 @@ import 'dotenv/config'
 import express from 'express'
 import prisma from './lib/prisma'
 import shortenRouter from './routes/shorten'
+import redirectRouter from './routes/redirect'
 
 const app = express()
 const PORT = process.env.PORT || 3000
 
 app.use(express.json())
 
-// mount routes
 app.use('/shorten', shortenRouter)
+app.use('/', redirectRouter)
 
-// health check
 app.get('/health', async (req, res) => {
   try {
     await prisma.$queryRaw`SELECT 1`
