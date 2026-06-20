@@ -1,4 +1,5 @@
 import 'dotenv/config'
+import cors from 'cors'
 import express from 'express'
 import prisma from './lib/prisma'
 import shortenRouter from './routes/shorten'
@@ -8,7 +9,9 @@ const app = express()
 const PORT = process.env.PORT || 3000
 
 app.use(express.json())
-
+app.use(cors({
+  origin: 'http://localhost:3001', // your frontend's origin, not a wildcard
+}))
 app.use('/shorten', shortenRouter)
 app.use('/', redirectRouter)
 
